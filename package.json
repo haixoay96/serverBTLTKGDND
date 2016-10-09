@@ -1,0 +1,24 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "server for btl",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haixoay96/serverBTLTKGDND.git"
+  },
+  "keywords": [
+    "nodejs",
+    "server",
+    "btl"
+  ],
+  "author": "Nguyen Duc Linh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haixoay96/serverBTLTKGDND/issues"
+  },
+  "homepage": "https://github.com/haixoay96/serverBTLTKGDND#readme"
+}
