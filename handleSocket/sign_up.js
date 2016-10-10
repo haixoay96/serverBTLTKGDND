@@ -1,5 +1,6 @@
-module.exports = (listAccount, listRoom, socket) => {
+module.exports = (listAccount, listRoom, socket, db) => {
     var _ = require('lodash');
+    var emailCheck = require('email-check');
     var sign_up = (data) => {
         /**
          * data = {
@@ -7,15 +8,44 @@ module.exports = (listAccount, listRoom, socket) => {
          *  password: 123456,
          *  phoneNumber: 0961077819
          * }
+         *
          */
+        const SUCCESSFULL = 100;
+        const ERROR_MAIL = 101;
+        const ERROR_EXISTS = 102;
+        const ERROR_SYSTEM = 103;
         var indexAccount = _.findIndex(listAccount, {
             username: data.username
         });
-        var config = indexAccount === -1 ? true : false;
-        socket.emit('result_sign_up', {
-            status: config
-        });
-        /// insert to database
+        emailCheck(data.username)
+            .then((res) => {
+                if (res) {
+                    var result = indexAccount === -1 ? SUCCESSFULL : ERROR_EXISTS;
+                    socket.emit('result_sign_up', {
+                        status: result
+                    });
+                    listAccount.push({
+                        username: data.username,
+                        password: data.password
+                    });
+                    return;
+                }
+                socket.emit('result_sign_up', {
+                    status: ERROR_MAIL
+                });
+            })
+            .catch((err) => {
+                if (err.message === 'refuse') {
+                    // The MX server is refusing requests from your IP address.
+                    console.log('Ip is fefused! ' + __filename);
+                } else {
+                    // Decide what to do with other errors.
+                    console.log('Email error ' + __filename);
+                }
+                socket.emit('result_sign_up', {
+                    status: ERROR_SYSTEM
+                });
+            });
     }
     return sing_up;
 }
