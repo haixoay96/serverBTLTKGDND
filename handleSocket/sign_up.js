@@ -1,6 +1,7 @@
 module.exports = (listAccount, listRoom, socket, db) => {
     var _ = require('lodash');
     var emailCheck = require('email-check');
+    var insertAccount = require('../handleDatabase/insertAccount.js')(db);
     var sign_up = (data) => {
         /**
          * data = {
@@ -30,6 +31,10 @@ module.exports = (listAccount, listRoom, socket, db) => {
                     });
                     return;
                 }
+                insertAccount('Account', {
+                    username: data.username,
+                    password: data.password
+                });
                 socket.emit('result_sign_up', {
                     status: ERROR_MAIL
                 });
@@ -47,5 +52,5 @@ module.exports = (listAccount, listRoom, socket, db) => {
                 });
             });
     }
-    return sing_up;
+    return sign_up;
 }
