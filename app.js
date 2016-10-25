@@ -1,2 +1,1 @@
-
 require('./handleDatabase/connect.js');
