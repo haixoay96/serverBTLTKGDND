@@ -16,8 +16,8 @@ module.exports = (listAccount,listAccountOnline, listRoom, socket, db)=>{
         });
         if(indexAccount!==-1){
             listAccountOnline.push({
-                username: data.username,
-                password: data.password
+                username: username,
+                socket: socket.id
             });
             socket.emit('result_login', {
                 status: SUCCESSFULL

@@ -22,19 +22,20 @@ module.exports = (listAccount, listRoom, socket, db) => {
             .then((res) => {
                 if (res) {
                     var result = indexAccount === -1 ? SUCCESSFULL : ERROR_EXISTS;
+                    var account = {
+                        username: data.username,
+                        password: data.password,
+                        status: ''
+                        avatar: '/avatar.png',
+                        background: '/background.jpg'
+                    };
                     socket.emit('result_sign_up', {
                         status: result
                     });
-                    listAccount.push({
-                        username: data.username,
-                        password: data.password
-                    });
+                    listAccount.push(account);
+                    insertAccount('Account', account);
                     return;
                 }
-                insertAccount('Account', {
-                    username: data.username,
-                    password: data.password
-                });
                 socket.emit('result_sign_up', {
                     status: ERROR_MAIL
                 });

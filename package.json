@@ -23,6 +23,7 @@
   "homepage": "https://github.com/haixoay96/serverBTLTKGDND#readme",
   "dependencies": {
     "email-check": "^1.1.0",
+    "express": "^4.14.0",
     "lodash": "^4.16.4",
     "mongodb": "^2.2.10",
     "socket.io": "^1.5.0"
